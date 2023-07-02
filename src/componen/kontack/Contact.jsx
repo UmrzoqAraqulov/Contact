@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import GetData from "./getData";
 import "./contact.scss";
+import { toast } from "react-toastify";
 import AddContact from "./AddContact";
 import { v4 as uuidv4 } from "uuid";
 
@@ -45,6 +46,8 @@ export class Contact extends Component {
   };
   render() {
     const OpenModal = () => {
+      this.state.selected=""; 
+      this.state.selectedId=""; 
       document.body.classList.toggle("OpenModal");
     };
     const addInfo = (img, firstName, lastName, number, guruhi) => {
@@ -54,6 +57,7 @@ export class Contact extends Component {
           ...this.state.contact,
           { id: uuidv4(), img, firstName, lastName, number, guruhi },
         ];
+        toast.success("Add Contact");
       } else {
         contact = this.state.contact.map((el) => {
           if (el.id === this.state.selectedId) {
@@ -65,6 +69,7 @@ export class Contact extends Component {
           }
           return el;
         });
+        toast.success("Save Contact");
         this.setState.selected = "";
         this.setState.selectedId = "";
       }
@@ -80,6 +85,7 @@ export class Contact extends Component {
         console.log(contact, id);
         this.setState({ contact });
         localStorage.setItem("contact", JSON.stringify(contact));
+        toast.success("delete Contact");
       }
     };
 
@@ -88,6 +94,7 @@ export class Contact extends Component {
       if (deleteAll) {
         let contact = [];
         this.setState({ contact });
+        toast.success("delete all Contact");
       }
     };
 
